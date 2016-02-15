@@ -962,10 +962,13 @@ def test_resource_inherits_type_optional_get(inherited_resources):
 
 def test_resource_inherits_get(inherited_resources):
     assert len(inherited_resources.resources) == 7
-    post_res = inherited_resources.resources[3]
-    get_res = inherited_resources.resources[4]
 
-    assert get_res.method == "get"
+    rs = [r for r in inherited_resources.resources
+          if r.path == '/another-post-resource']
+    assert len(rs) == 2
+    [post_res] = [r for r in rs if r.method == 'post']
+    [get_res] = [r for r in rs if r.method == 'get']
+
     assert len(get_res.headers) == 1
     assert len(get_res.body) == 1
     assert len(get_res.responses) == 2
@@ -991,7 +994,6 @@ def test_resource_inherits_get(inherited_resources):
     assert q.max_length == 50
     assert q.required is True
 
-    assert post_res.method == "post"
     assert post_res.description.raw == "post some more foobar"
 
 
