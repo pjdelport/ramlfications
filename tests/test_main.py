@@ -233,7 +233,7 @@ def test_update(runner, mocker):
     mocker.patch("ramlfications.utils.update_mime_types")
     mocker.patch("ramlfications.utils._save_updated_mime_types")
 
-    runner.invoke(main.update)
+    runner.invoke(main.update, catch_exceptions=False)
 
     utils.update_mime_types.assert_called_once_with()
     utils._save_updated_mime_types.assert_called_once_with()
