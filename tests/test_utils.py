@@ -145,7 +145,8 @@ def test_insecure_download_urllib_flag(_a, _b, _c, mocker, monkeypatch):
     mocker.patch("ramlfications.utils._urllib_download")
 
     utils.update_mime_types()
-    utils._urllib_download.assert_called_once()
+    utils._urllib_download.assert_called_once_with(
+        'https://www.iana.org/assignments/media-types/media-types.xml')
 
     mocker.stopall()
 
@@ -161,7 +162,8 @@ def test_secure_download_requests_flag(_a, _b_, _c, mocker, monkeypatch):
     mocker.patch("ramlfications.utils._requests_download")
 
     utils.update_mime_types()
-    utils._requests_download.assert_called_once()
+    utils._requests_download.assert_called_once_with(
+        'https://www.iana.org/assignments/media-types/media-types.xml')
 
     mocker.stopall()
 
@@ -176,11 +178,11 @@ def test_update_mime_types(_a, _b, _c, _d, _e, downloaded_xml):
 
     with open(downloaded_xml, "r", encoding="UTF-8") as raw_data:
         utils.update_mime_types()
-        utils._requests_download.assert_called_once()
+        utils._requests_download.assert_called_once_with()
         utils._requests_download.return_value = raw_data.read()
-        utils._xml_to_dict.assert_called_once()
-        utils._parse_xml_data.assert_called_once()
-        utils._save_updated_mime_types.assert_called_once()
+        utils._xml_to_dict.assert_called_once_with()
+        utils._parse_xml_data.assert_called_once_with()
+        utils._save_updated_mime_types.assert_called_once_with()
 
 
 def test_save_updated_mime_types():

@@ -235,8 +235,8 @@ def test_update(runner, mocker):
 
     runner.invoke(main.update)
 
-    utils.update_mime_types.assert_called_once()
-    utils._save_updated_mime_types.assert_called_once()
+    utils.update_mime_types.assert_called_once_with()
+    utils._save_updated_mime_types.assert_called_once_with()
 
     end_mtime = os.path.getmtime(json_path)
 
