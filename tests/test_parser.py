@@ -676,10 +676,11 @@ def test_resource_assigned_type(resources):
     assert res.headers[0] == res.resource_type.headers[0]
     assert res.body[0] == res.resource_type.body[0]
     assert res.responses[0] == res.resource_type.responses[0]
-    assert len(res.headers) == 3
-    assert res.headers[0].name == "X-another-header"
-    assert res.headers[1].name == "Accept"
-    assert res.headers[2].name == "X-example-header"
+    assert set([h.name for h in res.headers]) == set([
+        "X-another-header",
+        "Accept",
+        "X-example-header",
+    ])
 
     res = resources[18]
     assert res.type == "collection"
